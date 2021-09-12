@@ -3,7 +3,8 @@ import {
     Row,
     Col,
     Card,
-    Avatar
+    Avatar,
+    Space
 } from 'antd';
 import '../styles/articles.css'
 import { BoxLoading } from 'react-loadingg';
@@ -41,11 +42,11 @@ class Articles extends Component {
           <div>
             {!isLoading ? (
               results.map(result => {
-                const { _id, title, abstract } = result;
+                const { id, title, abstract, published_date, byline } = result;
+
                 return (
-                    <Row gutter={16}>
-                        <Col span={8}>
-                        <Card style={{ width: 300, marginTop: 16 }} bordered={true} key={_id}>
+                    <div className="site-card-wrapper">
+                        <Card style={{ width: 300, marginTop: 16 }} bordered={true} key={id}>
                             <Meta
                             avatar={
                                 <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
@@ -53,9 +54,15 @@ class Articles extends Component {
                             title={title}
                             description={abstract}
                             />
+                            <Row>
+                                <Space>
+                                    <p>{byline}</p>
+                                    <br/>
+                                    <p>{published_date}</p>
+                                </Space>
+                            </Row>
                         </Card>
-                        </Col>
-                    </Row>
+                    </div>
                 );
               })
             ) : (
