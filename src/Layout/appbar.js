@@ -5,7 +5,7 @@ import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
 const NavBar = () => {
     
         return (
-            <Navbar bg="dark" variant="dark">
+            <Navbar bg="dark" variant="dark" className="justify-content-center">
           <Nav className="mr-auto">
             <Nav.Link >Home</Nav.Link>
             <Nav.Link >About</Nav.Link>

@@ -1,68 +1,69 @@
 import React, { Component } from 'react'
-import Card from 'react-bootstrap/Card'
-import '../App.css';
-import '../index.css'
+import {
+    Row,
+    Col,
+    Card,
+    Avatar
+} from 'antd';
+import '../styles/articles.css'
+import { BoxLoading } from 'react-loadingg';
 import { instanceAxios, baseURL } from '../config/instance-axios';
 
 const { Meta } = Card;
 
-class Articles extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        error: null,
-        isLoaded: false,
-        articles: []
-      };
-    }
-  
+class Articles extends Component {
+    state = {
+      results: [],
+      isLoading: true,
+      errors: null
+    };
+
     componentDidMount() {
-      fetch(`${baseURL}`)
-        .then(response => response.json())
-        .then(
-          (response) => {
-            console.log(response)
-            this.setState({
-              isLoaded: true,
-              articles: response.articles
-            });
-          },
-          // Note: it's important to handle errors here
-          // instead of a catch() block so that we don't swallow
-          // exceptions from actual bugs in components.
-          (error) => {
-            this.setState({
-              isLoaded: true,
-              error
-            });
-          }
-        )
+      instanceAxios
+        .get(`${baseURL}`)
+        .then(response => {
+          this.setState({
+            results: response.data.results,
+            isLoading: false
+          });
+        })
+
+        .catch(error => this.setState({ 
+            error, 
+            isLoading: false 
+        }));
     }
-  
+
     render() {
-      const { error, isLoaded, articles } = this.state;
-      if (error) {
-        return <div>Error: {error.message}</div>;
-      } else if (!isLoaded) {
-        return <div>Loading...</div>;
-      } else {
-        return (
-          <>
-            <Card style={{ width: '18rem' }}>
-                <Card.Body>
-                    <Card.Title>Card Title</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle>
-                    <Card.Text>
-                    Some quick example text to build on the card title and make up the bulk of
-                    the card's content.
-                    </Card.Text>
-                    <Card.Text>Card Link</Card.Text>
-                    <Card.Text>Another Link</Card.Text>
-                </Card.Body>
-            </Card>
-          </>
-        );
-      }
+      const { isLoading, results } = this.state;
+
+      return (
+          <div>
+            {!isLoading ? (
+              results.map(result => {
+                const { _id, title, abstract } = result;
+                return (
+                    <Row gutter={16}>
+                        <Col span={8}>
+                        <Card style={{ width: 300, marginTop: 16 }} bordered={true} key={_id}>
+                            <Meta
+                            avatar={
+                                <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                            }
+                            title={title}
+                            description={abstract}
+                            />
+                        </Card>
+                        </Col>
+                    </Row>
+                );
+              })
+            ) : (
+              <BoxLoading/>
+            )}
+          </div>
+      );
     }
   }
-export default Articles;
+
+  export default Articles;
