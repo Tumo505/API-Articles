@@ -8,6 +8,7 @@ import {
     Divider
 } from 'antd';
 import '../styles/articles.css'
+import 'antd/dist/antd.css';
 import { BoxLoading } from 'react-loadingg';
 import { instanceAxios, baseURL } from '../config/instance-axios';
 
@@ -119,14 +120,14 @@ class Articles extends Component {
               <Row gutter={16}>
                     {!isLoading ? (results.map(result => {
                         return (
-                            <Col className="gutter-row" span={8}>
+                            <Col className="gutter-row" span={8} xs ={24} xl={8}>
                             <div className="site-card-wrapper">
                                 <Card 
                                     className="card" 
                                     bordered={true} 
                                     hoverable key={result.id}>
                                     <Meta avatar={
-                                        <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                                        <Avatar src="https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png" />
                                     }
                                     title={result.title}
                                     description={result.abstract}
@@ -163,7 +164,7 @@ class Articles extends Component {
                     </Toolbar>
 
                     <DialogContent >
-                        <h2 className='dialogTitle'>{this.state.title}</h2>
+                        <h2>{this.state.title}</h2>
                         <span style={{color: "#5C6E80"}}>{this.state.abstract}</span>
                         <br/>
                         {/* <img src={this.state.image} alt="photo"/> */}
