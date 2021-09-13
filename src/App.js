@@ -4,7 +4,6 @@ import { Route, Switch } from 'react-router-dom'
 import { BrowserRouter as Router } from 'react-router-dom'
 import NavBar from './Layout/appbar';
 import Articles from './components/articles';
-import SingleArticle from './components/singleArticle';
 
 class App extends React.Component {
   render() {
@@ -14,7 +13,6 @@ class App extends React.Component {
         <NavBar/>
           <Switch>
             <Route exact path='/' component={Articles}/>
-            <Route path='/articles/:id' component={SingleArticle}/>
           </Switch>
         </Router>
       </div>

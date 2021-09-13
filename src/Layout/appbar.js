@@ -15,6 +15,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 
+
 const useStyles = makeStyles((theme) => ({
     grow: {
       flexGrow: 1,
@@ -176,7 +177,7 @@ export default function NavBar() {
                         <MenuIcon />
                     </IconButton>
                     <Typography className={classes.title} variant="h6" noWrap>
-                        NY TImes Most Porpular
+                        NY TImes Most Popular
                     </Typography>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
