@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {
     Row,
+    Col,
     Card,
     Avatar,
     Space,
@@ -83,6 +84,8 @@ class Articles extends Component {
             byline: data.result.byline,
             published_date: data.result.published_date,
             caption: data.result.media.caption,
+            url: data.result.url,
+            type: data.result.type,
             viewOpen: true
         })
     }
@@ -113,40 +116,37 @@ class Articles extends Component {
       return (
           <div>
               <h3>Most Popular Articles</h3>
-            {!isLoading ? (results.map(result => {
-                // const { id, title, abstract, published_date, byline } = result;
-
-                return (
-                    <div className="site-card-wrapper">
-                        <Row>
-                            <Space>
-                        <Card 
-                            className="card" 
-                            bordered={true} 
-                            hoverable key={result.id}>
-                            <Meta avatar={
-                                <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                            }
-                            title={result.title}
-                            description={result.abstract}
-                            onClick={() => this.handleViewOpen({ result })}
-                            />
-                            <Row>
-                                <Space>
-                                    <p>{result.byline}</p>
-                                    <br/>
-                                    <p>{result.published_date}</p>
-                                </Space>
-                            </Row>
-                        </Card>
-                        </Space>
-                        </Row>
-                    </div>
-                );
-              })
-            ) : (
-              <BoxLoading/>
-            )}
+              <Row gutter={16}>
+                    {!isLoading ? (results.map(result => {
+                        return (
+                            <Col className="gutter-row" span={8}>
+                            <div className="site-card-wrapper">
+                                <Card 
+                                    className="card" 
+                                    bordered={true} 
+                                    hoverable key={result.id}>
+                                    <Meta avatar={
+                                        <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                                    }
+                                    title={result.title}
+                                    description={result.abstract}
+                                    onClick={() => this.handleViewOpen({ result })}
+                                    />
+                                    <Row>
+                                        <Space>
+                                            <p>{result.byline}</p>
+                                            <br/>
+                                            <p>{result.published_date}</p>
+                                        </Space>
+                                    </Row>
+                                </Card>
+                            </div></Col>
+                        );
+                    })
+                    ) : (
+                    <BoxLoading/>
+                    )}
+                </Row>
 
                 {/* view more details on the article on this dialog */}
                 <Dialog
@@ -173,10 +173,8 @@ class Articles extends Component {
                         <br/>
                         <p style={{color: "#505861"}}>{this.state.published_date}</p>
                         <Divider/>
-                        <h2><span style={{color: '#5C6E80'}}>Type:</span> {this.state.type}</h2>
-                        <div className='dialogStatus'><span style={{color: '#5C6E80'}}>Status:</span> {this.state.articlestatus}</div>
                         <DialogContentText id="alert-dialog-description">
-                            {this.state.body}
+                           <a href={this.state.url} target="_blank" rel="noreferrer">Read full {this.state.type} here</a>
                         </DialogContentText>
 
                     </DialogContent>
