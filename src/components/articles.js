@@ -63,18 +63,35 @@ class Articles extends Component {
     
 
     componentDidMount() {
-      instanceAxios.get(`${baseURL}`)
-        .then(response => {
-          this.setState({
-            results: response.data.results,
-            isLoading: false
-          });
-        })
+        const fetchArticles = async () => {
+            try {
+                const response = await instanceAxios.get(`${baseURL}`);
+                const results = await response.data.results;
+                console.log(results);
+                // return results;
+                this.setState({
+                    results: response.data.results,
+                    isLoading: false
+                })
+            } catch(err) {
+                console.log(err)
+            }
+        };
+        fetchArticles();  
+        
 
-        .catch(error => this.setState({ 
-            error, 
-            isLoading: false 
-        }));
+    //  instanceAxios.get(`${baseURL}`)
+    //     .then(response => {
+    //       this.setState({
+    //         results: response.data.results,
+    //         isLoading: false
+    //       });
+    //     })
+
+    //     .catch(error => this.setState({ 
+    //         error, 
+    //         isLoading: false 
+    //     }));
     }
 
     // data under dialog
