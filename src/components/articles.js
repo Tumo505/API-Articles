@@ -70,7 +70,7 @@ class Articles extends Component {
                 console.log(results);
                 // return results;
                 this.setState({
-                    results: response.data.results,
+                    results,
                     isLoading: false
                 })
             } catch(err) {
